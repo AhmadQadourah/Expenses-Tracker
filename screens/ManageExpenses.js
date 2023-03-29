@@ -21,12 +21,12 @@ function deleteExpenseHandler(id) {
 navigation.goBack();
 }
 
-function cancelHandler(id) {
+function cancelHandler() {
 
 navigation.goBack();
 }
-function confirmHandler(id) {
-  
+function confirmHandler() {
+
 navigation.goBack();
 
 }
