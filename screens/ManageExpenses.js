@@ -4,6 +4,7 @@ import IconButton from '../UI/IconButton';
 import { GlobalStyles } from '../constanse/Styles';
 import Button from '../UI/Button';
 import {ExpensesContext} from '../context/expenses-context'
+import ExpensesForm from '../ManageExpenses/ExpensesForm';
 const ManageExpenses = ({route,navigation}) => {
 
 const expenseCtx= useContext(ExpensesContext);
@@ -11,6 +12,7 @@ const expenseCtx= useContext(ExpensesContext);
 const editedExpenseId = route.params?.expenseId;
 const isEditing= !! editedExpenseId;
 
+const selectedExpense=expenseCtx.expenses.find((expense) => expense.id === editedExpenseId)
 
 useLayoutEffect(() => {
   navigation.setOptions({
@@ -27,18 +29,11 @@ function cancelHandler() {
 
 navigation.goBack();
 }
-function confirmHandler() {
+function confirmHandler(expenseData) {
 if(isEditing){
-  expenseCtx.updateExpense(editedExpenseId,{
-    description: "test!!!!",
-    amount: 20.0,
-    data: new Date("2022-09-13"),
-  });
+  expenseCtx.updateExpense(editedExpenseId,expenseData);
 } else {
-  expenseCtx.addExpense({description:'test',
-  amount:10.00,
-  data: new Date('2022-05-19')
-})
+  expenseCtx.addExpense(expenseData)
 }
 
 navigation.goBack();
@@ -46,14 +41,17 @@ navigation.goBack();
 }
 
 
+
   return (
     <View style={styles.container}>
-      <View style={styles.buttons}>
-      <Button style={styles.button} onPress={cancelHandler} mode={"flat"}>
-        Cancel{" "}
-      </Button>
-      <Button style={styles.button} onPress={confirmHandler}>{isEditing ? "Update" : "Add"}</Button>
-      </View>
+      <ExpensesForm
+        onCancel={cancelHandler}
+        isEditing={isEditing}
+        submitButtonLabel={isEditing ? "Update" : "Add"}
+        onSubmit={confirmHandler}
+        defaultValues ={selectedExpense}
+      />
+
       {isEditing && (
         <View style={styles.deleteContainer}>
           <IconButton
@@ -83,13 +81,5 @@ deleteContainer:{
   borderTopColor:GlobalStyles.colors.primary200,
   alignItems:'center'
 },
-buttons:{
-flexDirection:'row',
-justifyContent:'center',
-alignItems:'center'
-},
-button:{
-  minWidth:120,
-  marginHorizontal:8
-}
+
 })
