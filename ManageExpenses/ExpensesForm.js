@@ -43,10 +43,10 @@ const ExpensesForm = ({
     };
 
     const amountIsValid = expenseData.amount > 0 && !isNaN(expenseData.amount);
-    const dateIsValid = expenseData.date.toString() === !"Invalid Date";
+    const dateIsValid = expenseData.date.toString() !== "Invalid Date";
     const descriptionIsValid = expenseData.description.trim().length > 0;
 
-    if (!amountIsValid || dateIsValid || descriptionIsValid) {
+    if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
       // Alert.alert('Invalid Input', 'Please Check Your Input Values')
 
       setInputs((curInputs) => {
@@ -59,7 +59,6 @@ const ExpensesForm = ({
           },
         };
       });
-
       return;
     }
     onSubmit(expenseData);
