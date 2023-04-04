@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet,  View } from "react-native";
 import React, { useContext, useLayoutEffect, useState } from "react";
 import IconButton from "../UI/IconButton";
 import { GlobalStyles } from "../constanse/Styles";
-import Button from "../UI/Button";
 import { ExpensesContext } from "../context/expenses-context";
 import ExpensesForm from "../ManageExpenses/ExpensesForm";
 import { deleteExpense, storeExpense, updateExpense } from "../util/http";
